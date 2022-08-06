@@ -1,0 +1,50 @@
+.alert{
+    margin-bottom: 0 !important;
+    padding-right: 0 !important;
+    width: 100%;
+}
+
+.container-grafico{
+    position: flex;
+    padding: 20px;
+    margin: 5px;
+    margin-bottom: 20px;
+    width: 100%;
+    border-radius: 5px !important;
+    box-shadow: 1px 1px 5px 3px rgba(0, 0, 0, 0.5);
+    
+}
+
+.container-grafico text{
+    font-size: 14px;
+}
+
+.linha-graficos{
+    padding: 10px 30px;
+}
+
+.container-botao{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding: 10px;
+
+}
+
+.botao-main{
+    display: flex !important;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+    width: 230px;
+    margin: 5px 30px;
+}
+
+.form-dias{
+    display: none;
+}
+
+.active {
+    display: block;
+}
+

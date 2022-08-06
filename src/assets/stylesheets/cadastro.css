@@ -1,0 +1,22 @@
+.container-cadastro{
+    width: 50% !important;
+    margin: 0 auto;
+    margin-top: 15px;
+    border: 1px solid #c5c5c5;
+    border-radius: 5px;
+    padding: 30px;
+    background-color: white;
+}
+
+.cadastro-button{
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 700px)
+{
+  .container-cadastro
+   {
+    width: 90% !important;
+   }
+}
