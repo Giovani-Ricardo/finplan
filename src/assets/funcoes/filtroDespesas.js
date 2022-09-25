@@ -9,11 +9,11 @@ export function filtrarDespesa(select, dataInicio, dataFim, lista) {
         dataFim = undefined;
     }
     
-    if (select === "Selecione a categoria" && dataInicio == undefined  && dataFim == undefined ) {
+    if (select === "Selecione a categoria" && dataInicio === undefined  && dataFim === undefined ) {
         return lista;
     }
 
-    if (dataInicio != undefined && dataFim === undefined) {
+    if (dataInicio !== undefined && dataFim === undefined) {
         alert("Selecione a data Fim");
         return lista;
     }
@@ -28,12 +28,12 @@ export function filtrarDespesa(select, dataInicio, dataFim, lista) {
         return nova_lista;
     }
 
-    if(select != "Selecione a categoria" && dataInicio === undefined && dataFim === undefined){
+    if(select !== "Selecione a categoria" && dataInicio === undefined && dataFim === undefined){
         let nova_lista = filtrarPorCategoria(select, lista);
         return(nova_lista);
     }
 
-    if(select != "Selecione a categoria" && dataInicio !== undefined && dataFim !== undefined){
+    if(select !== "Selecione a categoria" && dataInicio !== undefined && dataFim !== undefined){
         let nova_lista = filtarPorData(dataInicio, dataFim, lista);
         nova_lista = filtrarPorCategoria(select, nova_lista);
         return nova_lista;
@@ -52,7 +52,7 @@ function filtarPorData(dataInicio, dataFim, lista){
 
         let data_lista = lista[i].date.split('/').map((e) => parseInt(e));
         
-        if(data_lista[2] == data_inicio[2]){
+        if(data_lista[2] === data_inicio[2]){
             if(data_lista[1] >= data_inicio[1] && data_lista[1] <= data_fim[1]){
                 if(data_lista[0] >= data_inicio[0] && data_lista[0] <= data_fim[0]){
                     nova_lista.push([lista[i]]);

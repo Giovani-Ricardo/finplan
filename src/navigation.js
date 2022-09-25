@@ -20,7 +20,7 @@ function Nav_bar({ logar }) {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav>
-                            <Link to='/'><img className='logo' src={logo}></img></Link>
+                            <Link to='/'><img className='logo' src={logo} alt=""></img></Link>
                         </Nav>
 
                         <Nav className="me-auto">

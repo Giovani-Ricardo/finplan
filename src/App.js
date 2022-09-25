@@ -1,11 +1,11 @@
 import './assets/stylesheets/App.css';
 import './assets/stylesheets/login.css'
 import { useState } from 'react';
-import Nav_bar from './navigation'
+import NavBar2 from './navigation'
 import NavBar from './assets/components/NavBar'
 
 function App() {
-    const [logado, setLogado] = useState(false);
+    const [logado, setLogado] = useState(true);
 
     const logar = () => {
         setLogado(!logado)
@@ -13,10 +13,10 @@ function App() {
 
 
     if(logado) {
-        return <div><NavBar logar={logar}></NavBar></div>
+        return (<div><NavBar logar={logar}></NavBar></div>)
     } else {
         return (
-        <div className='conteudo'><Nav_bar logar={logar}></Nav_bar></div>
+        <div className='conteudo'><NavBar2 logar={logar}></NavBar2></div>
         )
     }
 

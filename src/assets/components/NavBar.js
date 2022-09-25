@@ -12,7 +12,6 @@ import Main from '../../main'
 import Categorias from '../../categorias'
 import Despesas from '../../despesas'
 
-
 function NavBar({logar}) {
     const [sidebar, setSidebar] = useState(false);
     const [userbox, setUserbox] = useState(false);
@@ -28,7 +27,7 @@ function NavBar({logar}) {
                     <Link to="#" className='menu-bars'>
                         <FaBars onClick={showSidebar}></FaBars>
                     </Link>
-                    <Link to="#" className=''><img className='logo' src={logo}></img></Link>
+                    <Link to="#" className=''><img className='logo' src={logo} alt=""></img></Link>
                     <Link to="#" className='menu-user-button'>
                         <FaUserCircle onClick={showUserbox}></FaUserCircle>
                     </Link>

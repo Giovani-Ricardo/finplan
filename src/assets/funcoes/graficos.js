@@ -43,13 +43,13 @@ export function calcularCategorias(){
         let j = 0;
         for(; j < lista_dados.length; j++){ 
             
-            if(lista_dados[j][0] == dados_despesas[i].category){  
+            if(lista_dados[j][0] === dados_despesas[i].category){  
                 lista_dados[j][1] += dados_despesas[i].amount;
                 break;
             }
         }
 
-        if(j == lista_dados.length){
+        if(j === lista_dados.length){
             lista_dados.push([dados_despesas[i].category, dados_despesas[i].amount])
         }
         
@@ -114,7 +114,7 @@ function extrairDadosMesDespesas(){
             }
         }
 
-        if(j == lista_dados.length){
+        if(j === lista_dados.length){
             let data_lista = dados_despesas[i].date.split('/');
             let data = data_lista[1] + '/' +data_lista[2];
             lista_dados.push([data, dados_despesas[i].amount])

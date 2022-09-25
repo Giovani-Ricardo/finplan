@@ -21,7 +21,7 @@ function Home() {
       <Row>
         <Container fluid className="cont">
           <Col xs={6}>
-            <img className="image" src={saiba}></img>
+            <img className="image" src={saiba} alt=""></img>
           </Col>
           <Col xs={6}>
             <h1 className="font">FINPLAN</h1>

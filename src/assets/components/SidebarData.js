@@ -1,7 +1,7 @@
 import React from 'react'
-import FaFileInvoiceDollar from 'react-icons/fa';
-import AiFillHome from 'react-icons/ai';
-import MdCategory from 'react-icons/md';
+import {FaFileInvoiceDollar} from 'react-icons/fa';
+import {AiFillHome} from 'react-icons/ai';
+import {MdCategory} from 'react-icons/md';
 
 export const SidebarData = [
     {

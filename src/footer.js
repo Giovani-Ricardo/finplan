@@ -1,16 +1,7 @@
 import React from "react";
 import "./assets/stylesheets/footer.css";
-import { BsInstagram } from "react-icons/fa";
 import fac from "./assets/images/fac.jpeg";
 import inst from "./assets/images/ins.jpeg";
-import {
-  Col,
-  Container,
-  Row,
-  Carousel,
-  Card,
-  CardGroup,
-} from "react-bootstrap";
 
 function Footer(props) {
   return (

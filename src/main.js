@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import {React,  useState } from 'react'
 import { } from 'bootstrap'
 import './assets/stylesheets/cadastro.css'
 import { Form, Col, Row, Button, Modal, Alert } from 'react-bootstrap';
-import FiTarget from 'react-icons/fi';
+import {FiTarget} from 'react-icons/fi/index';
 import {MdSend} from 'react-icons/md';
 import './assets/stylesheets/main.css'
 import {BsPlusCircle} from 'react-icons/bs';

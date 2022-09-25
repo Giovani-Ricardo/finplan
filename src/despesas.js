@@ -82,7 +82,7 @@ function Despesas() {
                     <Col xs={3}>
                         <Form.Group className="mb-3">
                             <Form.Label>Inicio</Form.Label>
-                            <Form.Control onChange={(e) => dataInicio = e.target.value} type="date" />
+                            <Form.Control onChange={(e) => dataInicio = e.target.value} type="date"/>
                         </Form.Group>
                     </Col>
                     <Col xs={3}>
@@ -186,7 +186,7 @@ function Despesas() {
                 <Modal.Body>
                     <h5>Valor: R$ {objeto.amount}</h5>
                     <h5>Data:  {objeto.date}</h5>
-                    <h5>Pago: {objeto.paid == 'true' ? 'Sim' : 'Não'}</h5>
+                    <h5>Pago: {objeto.paid === 'true' ? 'Sim' : 'Não'}</h5>
                 </Modal.Body>
                 <Modal.Footer>
 
