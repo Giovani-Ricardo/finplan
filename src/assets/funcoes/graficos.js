@@ -1,25 +1,28 @@
 import dados_despesas from '../../data/expenses.json'
 import dados_meta from '../../data/goal.json'
 import previsao from '../../data/predict.json'
+import DespesaService from "../../services/DespesaService";
+import MetaService from "../../services/MetaService";
+
+ 
 
 //Essa função irá retornar os dados necessários para preencher os dados do gráfico de meta
-export function calcularMeta(){
+export function calcularMeta(despesas, teto){
     let total_despesas = 0;
     let sobra = 0;
-    
-    for(let i = 0; i < dados_despesas.length; i++){
-        let valor = parseFloat(dados_despesas[i].amount);
+
+    for(let i = 0; i < despesas.length; i++){
+        let valor = parseFloat(despesas[i].valor);
         total_despesas += valor;
     }
 
-    sobra = dados_meta.meta - total_despesas;
+    sobra = teto - total_despesas;
 
     let data = [
         ['Teto', 'Valor gasto'],
         ['Disponível' , sobra],
         ['Valor gasto', total_despesas]
     ]
-
     return data;
 }
 

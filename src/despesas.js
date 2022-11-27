@@ -68,7 +68,6 @@ function Despesas() {
         }
     }
 
-
     const getCategorias = async () => {
         const response = await CategoriaService.getCategorias();
         if(response.status === 200){

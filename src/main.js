@@ -1,4 +1,4 @@
-import {React,  useState } from 'react'
+import {React,  useState, useEffect } from 'react'
 import { } from 'bootstrap'
 import './assets/stylesheets/cadastro.css'
 import { Form, Col, Row, Button, Modal, Alert } from 'react-bootstrap';
@@ -7,7 +7,9 @@ import {MdSend} from 'react-icons/md';
 import './assets/stylesheets/main.css'
 import {BsPlusCircle} from 'react-icons/bs';
 import { Chart } from 'react-google-charts';
-import dados from './data/categories.json'
+import dados from './data/categories.json';
+import DespesaService from "./services/DespesaService";
+import MetaService from "./services/MetaService";
 import { calcularMeta, optionsGraficoMeta, calcularCategorias, optionsGraficoCategoria, calcularPrevisao, optionsPrevisao } from './assets/funcoes/graficos';
 
 
@@ -24,18 +26,60 @@ function Main(props) {
     const [formDias, setFormDias] = useState(false);
     const showFormDias = () => setFormDias(!formDias);
 
-    const [tetoGasto, setTetoGasto] = useState(calcularMeta())
+    // Obtem o valor do teto de gasto
+    const [tetoGasto, setTetoGasto] = useState(null);
+    const getMeta = async () => {
+        const response = await MetaService.getMeta();
+        if(response.status === 200){
+            setTetoGasto(response.data.valor);
+        }
+    }
+    
+    // Obter lista com todas as despesas cadastradas
+    const [listaDespesas, setListaDespesas] = useState([]);
+    const getAllDespesas = async () => {
+        const responseDespesas = await DespesaService.getDespesas();
+        if(responseDespesas.status === 200){
+            setListaDespesas(responseDespesas.data);
+        }
+    }
+
+    // Atualizar Meta
+    const [novaMeta, setNovaMeta] = useState(null);
+    const atualizarMeta = async (data) => {
+        console.log(data)
+        const response = await MetaService.redefinirMeta(data);
+        if(response.status === 200){
+            setTetoGasto(response.data.valor);
+        }
+    }
+
+    const handleNovaMeta = (e) => {
+        e.preventDefault();
+        atualizarMeta(novaMeta);
+        handleCloseModalDefinirMeta();
+        setNovaMeta({});
+    }; 
+
+    var valores = calcularMeta(listaDespesas, tetoGasto);
+
+    useEffect(() => {
+        getMeta();
+        getAllDespesas();
+    }, []);
 
     const atualizaTeto = (valor) => {
         console.log(valor)
     }
+
+    const user = JSON.parse(localStorage.getItem("user"));
 
     return (
         <div className='conteudo'>
 
             <Row className='alert'>
                 <Alert variant="success">
-                    <Alert.Heading>Bem vindo ao FinPlan</Alert.Heading>
+                    <Alert.Heading>Bem vindo ao FinPlan {user.nome}</Alert.Heading>
                     <hr />
                     <p className="mb-0">
                         Veja abaixo como está as finanças do seu negocio
@@ -52,7 +96,7 @@ function Main(props) {
                             chartType="PieChart"
                             width="110%"
                             height="300px"
-                            data={tetoGasto}
+                            data={valores}
                             options={optionsGraficoMeta()}
                         />
                     </div>
@@ -162,14 +206,19 @@ function Main(props) {
                     <Modal.Title>Definir teto</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onSubmit={(e) => atualizaTeto(e.target.valorTeto.value)}>
+                    <Form onSubmit={handleNovaMeta}>
 
                         <Form.Group className="mb-3" controlId="valorTeto">
                             <Form.Label>Novo valor</Form.Label>
-                            <Form.Control type="number" min="0" placeholder="R$:500,00" name="valorTeto" />
+                            <Form.Control 
+                            type="number" 
+                            min="0" 
+                            defaultValue={tetoGasto}
+                            onChange={(e) => novaMeta.valor = e.target.value}
+                            name="valorTeto" />
                         </Form.Group>
 
-                        <Button variant="success" >
+                        <Button variant="success" type="submit" >
                             <MdSend /><span style={{ marginLeft: "5px" }}>Salvar</span>
                         </Button>
                     </Form>
