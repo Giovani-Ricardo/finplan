@@ -1,14 +1,20 @@
 import './assets/stylesheets/App.css';
 import './assets/stylesheets/login.css'
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import NavBar2 from './navigation'
 import NavBar from './assets/components/NavBar'
+import {AuthContext} from "./contexts/auth"
 
 function App() {
-    const [logado, setLogado] = useState(true);
+    const [logado, setLogado] = useState(false);
+    // const {logout} = useContext(AuthContext);
 
     const logar = () => {
         setLogado(!logado)
+        
+        // if(logado == false){
+        //     logout();
+        // }
     }
 
 

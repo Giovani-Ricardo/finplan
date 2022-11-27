@@ -6,7 +6,7 @@ import {MdCategory} from 'react-icons/md';
 export const SidebarData = [
     {
         title: 'Inicio',
-        path: '/login',
+        path: '/principal',
         icon: <AiFillHome></AiFillHome>,
         cName: 'nav-text'
     },
