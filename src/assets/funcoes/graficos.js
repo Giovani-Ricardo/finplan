@@ -69,7 +69,6 @@ export function calcularCategorias(despesas, categorias){
         }
         
     }
-    console.log(lista_dados)
     return lista_dados;
 }
 
@@ -92,98 +91,20 @@ export function optionsGraficoCategoria(){
     return options;
 }
 
-export function calcularPrevisao(){
-    let lista_dados = [["Mês","Previsão" , "Real"]]
-    let despesas_agrupadas = extrairDadosMesDespesas();
+export function dadosGraficoTopDespesas(despesas){
+    let lista_dados = [['Despesas'], [' ']]
 
-    for(let i = 0; i < previsao.length; i++){
-        if(i < despesas_agrupadas.length){
-            lista_dados.push([previsao[i].mes, previsao[i].valor, despesas_agrupadas[i][1]]);
-        }else{
-            lista_dados.push([previsao[i].mes, previsao[i].valor, 0]);
-        }
-            
+    for(let despesa of despesas){
+        lista_dados[0].push(despesa.descricao);
+        // lista_dados[1].push(despesa.descricao);
+        lista_dados[1].push(parseInt(despesa.valor));
     }
-    extrairDadosMesDespesas()
     return lista_dados;
-}
-
-function extrairDadosMesDespesas(){
-    let lista_dados = [
-        ['01/2022' , 0],
-        ['02/2022' , 0],
-        ['03/2022' , 0],
-        ['04/2022' , 0],
-        ['05/2022' , 0],
-        ['06/2022' , 0],
-        ['07/2022' , 0],
-        ['08/2022' , 0],
-        ['09/2022' , 0],
-        ['10/2022' , 0],
-        ['11/2022' , 0],
-        ['12/2022' , 0]
-    ];
-    
-    for(let i = 0; i < dados_despesas.length; i++){
-        
-        let j = 0;
-        for(; j < lista_dados.length; j++){ 
-            let data_dados = dados_despesas[i].date.split('/');
-            let data_lista = lista_dados[j][0].split('/');
-            
-            if(data_lista[0] === data_dados[1]){  
-                lista_dados[j][1] += dados_despesas[i].amount;
-                break;
-            }
-        }
-
-        if(j === lista_dados.length){
-            let data_lista = dados_despesas[i].date.split('/');
-            let data = data_lista[1] + '/' +data_lista[2];
-            lista_dados.push([data, dados_despesas[i].amount])
-        }
-        
-    }
-    
-    lista_dados = ordernarData(lista_dados)
-    return lista_dados;
-}
-
-function ordernarData(datas) {
-
-    for (let j = 0; j < datas.length; j++) {
-
-        for (let i = 1; i < datas.length; i++) {
-
-            let atual = datas[i][0].split('/');
-            let anterior = datas[i - 1][0].split('/');
-
-            atual = [parseInt(atual[0]), parseInt(atual[1])]
-            anterior = [parseInt(anterior[0]), parseInt(anterior[1])]
-
-            if (atual[1] < anterior[1]) {
-
-                let temp = datas[i - 1];
-                datas[i - 1] = datas[i];
-                datas[i] = temp;
-
-
-            } else if (atual[0] < anterior[0]) {
-
-                let temp = datas[i - 1];
-                datas[i - 1] = datas[i];
-                datas[i] = temp;
-
-            }
-        }
-    }
-
-    return datas;
 }
 
 export const optionsPrevisao = {
     chart: {
-      title: "Previsão de gastos X valor real gasto",
+      title: "Top 5 despesas mais caras",
       subtitle: "Em reais (BRL)"
     },
   };

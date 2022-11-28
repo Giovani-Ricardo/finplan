@@ -21,6 +21,10 @@ const removeDespesa = id => {
     return api.delete(`/despesas/${id}`);
 };
 
+const top5Despesas = () => {
+    return api.get("/top_5_despesas");
+};
+
 const filtrarDespesas = (data) => {
     if(data.categorias_despesa_id == undefined){
         data.categorias_despesa_id = ""
@@ -44,5 +48,6 @@ export default {
     createDespesa,
     updateDespesa,
     removeDespesa,
-    filtrarDespesas
+    filtrarDespesas,
+    top5Despesas
 };

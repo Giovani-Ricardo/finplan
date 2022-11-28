@@ -34,7 +34,6 @@ function Categorias() {
 
     // Deletar uma categoria
     const deletarCategoria = async () => {
-        console.log()
         const response = await CategoriaService.removeCategoria(objeto.id);
         objeto = {};
         if(response.status === 204){

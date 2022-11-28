@@ -116,7 +116,6 @@ function Despesas() {
     const [filtroDespesa, setFiltroDespesa] = useState({});
 
     const filtrar = async (data) => {
-        console.log(data);
         const response = await DespesaService.filtrarDespesas(data);
         setListaDespesas(response.data);
     }
@@ -232,7 +231,6 @@ function Despesas() {
                                 <option>Selecione a categoria</option>
                                 {
                                     categorias.map((info, key) => {
-                                        console.log(`info_id: ${info.id} objeto_id: ${objeto.categorias_despesa_id}`)
                                         if(info.id === objeto.categorias_despesa_id){
                                             return <option key={key} value={info.id} selected={true}> {info.nome} </option>
                                         }else{

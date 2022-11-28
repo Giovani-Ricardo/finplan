@@ -11,7 +11,7 @@ import dados from './data/categories.json';
 import DespesaService from "./services/DespesaService";
 import MetaService from "./services/MetaService";
 import CategoriaService from "./services/CategoriaService"
-import { calcularMeta, optionsGraficoMeta, calcularCategorias, optionsGraficoCategoria, calcularPrevisao, optionsPrevisao } from './assets/funcoes/graficos';
+import { calcularMeta, optionsGraficoMeta, calcularCategorias, optionsGraficoCategoria, dadosGraficoTopDespesas, optionsPrevisao } from './assets/funcoes/graficos';
 
 
 function Main(props) {
@@ -54,6 +54,15 @@ function Main(props) {
         }
     }
 
+    // Obtendo top5despesas
+    const [top5despesas, settop5despesas] = useState([])
+    const getTop5despesas = async () => {
+        const response = await DespesaService.top5Despesas();
+        if(response.status === 200){
+            settop5despesas(response.data)
+        }
+    }
+
     // Atualizar Meta
     const [novaMeta, setNovaMeta] = useState({});
     const atualizarMeta = async (data) => {
@@ -76,6 +85,7 @@ function Main(props) {
         const response = await DespesaService.createDespesa(data);
         if(response.status === 201){
             getAllDespesas();
+            getTop5despesas();
         }
     }
 
@@ -87,12 +97,14 @@ function Main(props) {
     };
 
     var valoresGraficoMeta = calcularMeta(listaDespesas, tetoGasto);
-    var valoresGraficoCategorias = calcularCategorias(listaDespesas, categorias)
+    var valoresGraficoCategorias = calcularCategorias(listaDespesas, categorias);
+    var valoresGraficoTopDespesas = dadosGraficoTopDespesas(top5despesas);
 
     useEffect(() => {
         getMeta();
         getCategorias();
         getAllDespesas();
+        getTop5despesas();
     }, []);
 
        const user = JSON.parse(localStorage.getItem("user"));
@@ -142,10 +154,10 @@ function Main(props) {
                     <div className='container-grafico'>
                         <Chart
                             chartLanguage='pt-br'
-                            chartType="Line"
+                            chartType="Bar"
                             width="100%"
                             height="300px"
-                            data={calcularPrevisao()}
+                            data={valoresGraficoTopDespesas}
                             options={optionsPrevisao}
                         />
                     </div>

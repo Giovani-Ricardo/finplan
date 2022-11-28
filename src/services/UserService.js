@@ -1,4 +1,4 @@
-import api from "./api";
+import {api} from "./api";
 
 const createUser = data => {
         return api.post("/auth", data);
@@ -19,10 +19,7 @@ const removeUser = () => {
 // // };
 
 export default {
-    getCategoria,
-    getCategoria,
-    createCategoria,
-    updateCategoria,
-    removeCategoria,
-    // findByTitle
+    createUser,
+    updateUser,
+    removeUser,
 };
