@@ -56,7 +56,6 @@ function Categorias() {
 
     // Obtendo todas as categorias
     const [categorias, setCategorias] = useState([])
-
     const getCategorias = async () => {
         const response = await CategoriaService.getCategorias();
         if(response.status === 200){

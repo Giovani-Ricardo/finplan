@@ -11,12 +11,23 @@ export function calcularMeta(despesas, teto){
     let total_despesas = 0;
     let sobra = 0;
 
-    for(let i = 0; i < despesas.length; i++){
-        let valor = parseFloat(despesas[i].valor);
-        total_despesas += valor;
+    if(despesas.length < 0){
+        total_despesas = 0;
+    }else{
+        for(let i = 0; i < despesas.length; i++){
+            let valor = parseFloat(despesas[i].valor);
+            total_despesas += valor;
+        }
+    }
+    
+    sobra = teto - total_despesas;
+    if(teto === null){
+        teto = 0;
     }
 
-    sobra = teto - total_despesas;
+    if(sobra < 0){
+        sobra = 0;
+    }
 
     let data = [
         ['Teto', 'Valor gasto'],
@@ -38,27 +49,36 @@ export function optionsGraficoMeta(){
 }
 
 //Essa função é responsável por passar os dados para o graficos de gasto por categoria
-export function calcularCategorias(){
+export function calcularCategorias(despesas, categorias){
     let lista_dados = [["Categorias ", "Gastos"]];
     
-    for(let i = 0; i < dados_despesas.length; i++){
+    for(let i = 0; i < despesas.length; i++){
         
+        let categoria = getCategoriaNome(categorias, despesas[i].categorias_despesa_id)
         let j = 0;
+
         for(; j < lista_dados.length; j++){ 
-            
-            if(lista_dados[j][0] === dados_despesas[i].category){  
-                lista_dados[j][1] += dados_despesas[i].amount;
+            if(lista_dados[j][0] === categoria){  
+                lista_dados[j][1] += Number.parseFloat(despesas[i].valor);
                 break;
             }
         }
 
         if(j === lista_dados.length){
-            lista_dados.push([dados_despesas[i].category, dados_despesas[i].amount])
+            lista_dados.push([categoria, parseFloat(despesas[i].valor)]);
         }
         
     }
-    
+    console.log(lista_dados)
     return lista_dados;
+}
+
+function getCategoriaNome(categorias, id){
+    for(let categoria of categorias){
+        if(categoria.id === id){
+            return categoria.nome;
+        }
+    }
 }
 
 //Configuração do gráfico de gastos por categoria

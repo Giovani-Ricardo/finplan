@@ -77,7 +77,6 @@ function Despesas() {
 
     // Cadastro de nova Despesa
     const [novaDespesa, setNovaDespesa] = useState({});
-
     const cadastrarDespesa = async (data) => {
         const response = await DespesaService.createDespesa(data);
         if(response.status === 201){
@@ -150,7 +149,7 @@ function Despesas() {
                                 {
                                     categorias.map((info, key) => {
                                         return (
-                                            <option key={key} value={info.id}> {info.descricao} </option>
+                                            <option key={key} value={info.id}> {info.nome} </option>
                                         )
                                     })
                                 }
@@ -233,10 +232,11 @@ function Despesas() {
                                 <option>Selecione a categoria</option>
                                 {
                                     categorias.map((info, key) => {
-                                        if(info.id === objeto.id){
-                                            return <option key={key} value={info.id} selected={true}> {info.descricao} </option>
+                                        console.log(`info_id: ${info.id} objeto_id: ${objeto.categorias_despesa_id}`)
+                                        if(info.id === objeto.categorias_despesa_id){
+                                            return <option key={key} value={info.id} selected={true}> {info.nome} </option>
                                         }else{
-                                            return <option key={key} value={info.id}> {info.descricao} </option>
+                                            return <option key={key} value={info.id}> {info.nome} </option>
                                         }
                                     })
                                 }
@@ -328,7 +328,7 @@ function Despesas() {
                                 {
                                     categorias.map((info, key) => {
                                         return (
-                                            <option key={key} value={info.id}> {info.descricao} </option>
+                                            <option key={key} value={info.id}> {info.nome} </option>
                                         )
                                     })
                                 }
@@ -351,6 +351,7 @@ function Despesas() {
                 </Modal.Body>
 
             </Modal>
+
             <div className='barra-botao'><Button onClick={handleShowModalCadastroDespesa} className='botao' variant="outline-dark" size="lg"><BsPlusCircle /><span>Adicionar despesa</span></Button></div>
         </div>
     )

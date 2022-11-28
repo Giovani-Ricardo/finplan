@@ -10,6 +10,7 @@ import { Chart } from 'react-google-charts';
 import dados from './data/categories.json';
 import DespesaService from "./services/DespesaService";
 import MetaService from "./services/MetaService";
+import CategoriaService from "./services/CategoriaService"
 import { calcularMeta, optionsGraficoMeta, calcularCategorias, optionsGraficoCategoria, calcularPrevisao, optionsPrevisao } from './assets/funcoes/graficos';
 
 
@@ -44,12 +45,20 @@ function Main(props) {
         }
     }
 
-    // Atualizar Meta
-    const [novaMeta, setNovaMeta] = useState(null);
-    const atualizarMeta = async (data) => {
-        console.log(data)
-        const response = await MetaService.redefinirMeta(data);
+    // Obtendo todas as categorias
+    const [categorias, setCategorias] = useState([])
+    const getCategorias = async () => {
+        const response = await CategoriaService.getCategorias();
         if(response.status === 200){
+            setCategorias(response.data)
+        }
+    }
+
+    // Atualizar Meta
+    const [novaMeta, setNovaMeta] = useState({});
+    const atualizarMeta = async (data) => {
+        const response = await MetaService.redefinirMeta(data);
+        if(response.status === 200 || response.status === 201){
             setTetoGasto(response.data.valor);
         }
     }
@@ -59,20 +68,34 @@ function Main(props) {
         atualizarMeta(novaMeta);
         handleCloseModalDefinirMeta();
         setNovaMeta({});
-    }; 
+    };
 
-    var valores = calcularMeta(listaDespesas, tetoGasto);
+    // Cadastro de nova Despesa
+    const [novaDespesa, setNovaDespesa] = useState({});
+    const cadastrarDespesa = async (data) => {
+        const response = await DespesaService.createDespesa(data);
+        if(response.status === 201){
+            getAllDespesas();
+        }
+    }
+
+    const handleCadastrarDespesa = (e) => {
+        e.preventDefault();
+        cadastrarDespesa(novaDespesa);
+        handleCloseModalCadastroDespesa();
+        setNovaDespesa({});
+    };
+
+    var valoresGraficoMeta = calcularMeta(listaDespesas, tetoGasto);
+    var valoresGraficoCategorias = calcularCategorias(listaDespesas, categorias)
 
     useEffect(() => {
         getMeta();
+        getCategorias();
         getAllDespesas();
     }, []);
 
-    const atualizaTeto = (valor) => {
-        console.log(valor)
-    }
-
-    const user = JSON.parse(localStorage.getItem("user"));
+       const user = JSON.parse(localStorage.getItem("user"));
 
     return (
         <div className='conteudo'>
@@ -96,7 +119,7 @@ function Main(props) {
                             chartType="PieChart"
                             width="110%"
                             height="300px"
-                            data={valores}
+                            data={valoresGraficoMeta}
                             options={optionsGraficoMeta()}
                         />
                     </div>
@@ -109,7 +132,7 @@ function Main(props) {
                             chartType="PieChart"
                             width="110%"
                             height="300px"
-                            data={calcularCategorias()}
+                            data={valoresGraficoCategorias}
                             options={optionsGraficoCategoria()}
                         />
                     </div>
@@ -144,53 +167,43 @@ function Main(props) {
                     <Modal.Title>Cadastrar despesa</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form>
+                    <Form onSubmit={handleCadastrarDespesa}>
                         <Form.Group className="mb-3" controlId="name">
                             <Form.Label>Descrição</Form.Label>
-                            <Form.Control type="text" placeholder="" />
-                        </Form.Group>
-
-                        <Form.Group className="mb-3">
-                            <Form.Label>Categoria</Form.Label>
-                            <Form.Select>
-                                {
-                                    dados.map((info, key) => {
-                                        return (
-                                            <option key={key}>{info.name}</option>
-                                        )
-                                    })
-                                }
-
-                            </Form.Select>
+                            <Form.Control 
+                            type="text" 
+                            placeholder="" 
+                            required={true}
+                            onChange={(e) => novaDespesa.descricao = e.target.value}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="description">
                             <Form.Label>Valor</Form.Label>
-                            <Form.Control type="number" min="0" placeholder="R$:500,00" />
+                            <Form.Control type="number" min="0" placeholder="R$:500,00" required={true} onChange={(e) => novaDespesa.valor = e.target.value}/>
+                        </Form.Group>
+
+                        <Form.Group className="mb-3">
+                            <Form.Label defaultValue="Selecione a categoria">Categoria</Form.Label>
+                            <Form.Select required={true} onChange={(e) => novaDespesa.categorias_despesa_id = e.target.value} >
+                                <option>Selecione a categoria</option>
+                                {
+                                    categorias.map((info, key) => {
+                                        return (
+                                            <option key={key} value={info.id}> {info.nome} </option>
+                                        )
+                                    })
+                                }
+                            </Form.Select>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="percentage">
                             <Form.Label>Data de vencimento</Form.Label>
-                            <Form.Control type="date" placeholder="dd/mm/aaaa" />
+                            <Form.Control type="date" required="true" onChange={(e) => novaDespesa.data_vencimento = e.target.value}/>
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="alert">
-                            <Form.Check type="checkbox" label="Deseja ser alertado no vencimento?" />
+                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                            <Form.Check type="checkbox" label="Deseja ser alertado no vencimento?" onChange={(e) => novaDespesa.alertar_vencimento = e.target.value}/>
                         </Form.Group>
-
-                        <Row>
-                            <Col md={6}>
-                                <Form.Group className="" controlId="periodo">
-                                    <Form.Check type="checkbox" onClick={showFormDias} label="Despesa recorrente?" />
-                                </Form.Group>
-                            </Col>
-
-                            <Col md={6}>
-                                <Form.Group className={formDias ? 'form-dias active' : 'form-dias'} controlId="description">
-                                    <Form.Control type="number" min="0" placeholder="Período em dias" />
-                                </Form.Group>
-                            </Col>
-                        </Row>
 
                         <Button variant="success" type="submit">
                             <MdSend /><span style={{ marginLeft: "5px" }}>Salvar</span>
