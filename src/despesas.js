@@ -5,8 +5,6 @@ import {FaCheck} from 'react-icons/fa';
 import {BsPlusCircle, BsSearch} from 'react-icons/bs';
 import { Col, Row, Table, Modal, Button, Form } from 'react-bootstrap'
 import './assets/stylesheets/despesas.css'
-import dados from './data/categories.json'
-import dados_despesas from './data/expenses.json'
 import DespesaService from "./services/DespesaService";
 import CategoriaService from "./services/CategoriaService"
 import {conversorData} from './assets/funcoes/conversorData'

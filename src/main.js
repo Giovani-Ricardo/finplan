@@ -7,7 +7,6 @@ import {MdSend} from 'react-icons/md';
 import './assets/stylesheets/main.css'
 import {BsPlusCircle} from 'react-icons/bs';
 import { Chart } from 'react-google-charts';
-import dados from './data/categories.json';
 import DespesaService from "./services/DespesaService";
 import MetaService from "./services/MetaService";
 import CategoriaService from "./services/CategoriaService"

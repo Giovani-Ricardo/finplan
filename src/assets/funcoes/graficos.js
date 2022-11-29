@@ -1,10 +1,4 @@
-import dados_despesas from '../../data/expenses.json'
-import dados_meta from '../../data/goal.json'
-import previsao from '../../data/predict.json'
-import DespesaService from "../../services/DespesaService";
-import MetaService from "../../services/MetaService";
 
- 
 
 //Essa função irá retornar os dados necessários para preencher os dados do gráfico de meta
 export function calcularMeta(despesas, teto){

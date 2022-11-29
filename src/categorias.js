@@ -5,7 +5,6 @@ import {FaCheck} from 'react-icons/fa';
 import {BsPlusCircle} from 'react-icons/bs';
 import {Table, Modal, Button, Form } from 'react-bootstrap'
 import './assets/stylesheets/categoria.css'
-import dados from './data/categories.json'
 import CategoriaService from "./services/CategoriaService"
 
 
