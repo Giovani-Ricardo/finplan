@@ -1,4 +1,5 @@
-import React, {useState, useContext} from 'react'
+import React, { useState } from 'react'
+import { IMaskInput } from "react-imask";
 import './assets/stylesheets/cadastro.css'
 import estados from './data/estados.json'
 import { useNavigate } from "react-router-dom";
@@ -74,7 +75,10 @@ function Cadastro(props) {
                 <Row className="mb-3">
                     <Form.Group as={Col} controlId="formGridZip">
                         <Form.Label>CEP</Form.Label>
-                        <Form.Control 
+                        <Form.Control
+                        maxLength={9}
+                        as={IMaskInput}
+                        mask="00000-000"
                         placeholder="00000-000"
                         onChange={(e) => novoUsuario.endereco_atributtes.cep = e.target.value}
                         />

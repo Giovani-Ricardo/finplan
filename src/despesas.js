@@ -333,7 +333,7 @@ function Despesas() {
 
                         <Form.Group className="mb-3" controlId="percentage">
                             <Form.Label>Data de vencimento</Form.Label>
-                            <Form.Control type="date" required="true" onChange={(e) => novaDespesa.data_vencimento = e.target.value}/>
+                            <Form.Control type="date" required={true} onChange={(e) => novaDespesa.data_vencimento = e.target.value}/>
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicCheckbox">

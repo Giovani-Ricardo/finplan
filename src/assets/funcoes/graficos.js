@@ -87,11 +87,16 @@ export function optionsGraficoCategoria(){
 
 export function dadosGraficoTopDespesas(despesas){
     let lista_dados = [['Despesas'], [' ']]
-
-    for(let despesa of despesas){
-        lista_dados[0].push(despesa.descricao);
-        // lista_dados[1].push(despesa.descricao);
-        lista_dados[1].push(parseInt(despesa.valor));
+    if (despesas.length > 0) {
+        
+        for(let despesa of despesas){
+            lista_dados[0].push(despesa.descricao);
+            // lista_dados[1].push(despesa.descricao);
+            lista_dados[1].push(parseInt(despesa.valor));
+        }
+    } else {
+        lista_dados[0].push("Não há dados");
+        lista_dados[1].push(0);
     }
     return lista_dados;
 }

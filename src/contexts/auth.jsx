@@ -32,16 +32,16 @@ export const AuthProvider = ({ children }) => {
             "email": response.data.email
         };
 
-        const token = response.headers.Authorization;
+        // const token = response.headers['authorization'];
         // const client = response.data.client;
         // const uid = response.data.uid;
         
-        api.defaults.headers.access_token = {token};
+        // api.defaults.headers.authorization = {token};
         // api.defaults.headers.client = {client};
         // api.defaults.headers.uid = {uid};
 
         localStorage.setItem("user", JSON.stringify(loggedUser));
-        localStorage.setItem("token", token);
+        // localStorage.setItem("token", token);
         // localStorage.setItem("client", client);
         // localStorage.setItem("uid", uid);
         
