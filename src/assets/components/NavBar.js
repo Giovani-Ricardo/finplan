@@ -11,6 +11,8 @@ import { IconContext } from 'react-icons';
 import Main from '../../main'
 import Categorias from '../../categorias'
 import Despesas from '../../despesas'
+import Usuario from '../../usuario'
+
 import {AuthProvider, AuthContext} from "../../contexts/auth"
 
 
@@ -44,7 +46,7 @@ function NavBar({logar}) {
                         <Link to="#" className='menu-bars'>
                             <FaBars onClick={showSidebar}></FaBars>
                         </Link>
-                        <Link to="#" className=''><img className='logo' src={logo} alt=""></img></Link>
+                        <Link to="/principal" className=''><img className='logo' src={logo} alt=""></img></Link>
                         <Link to="#" className='menu-user-button'>
                             <FaUserCircle onClick={showUserbox}></FaUserCircle>
                         </Link>
@@ -54,7 +56,7 @@ function NavBar({logar}) {
                     <div className={userbox ? 'menu-user-box active' : 'menu-user-box'}>
                         <ul className='nav-menu-items'>
                             <li className='nav-text'>
-                                <Link to="#" className='nav-text'>
+                                <Link to="/usuario" className='nav-text' onClick={showUserbox}>
                                     <FaUserEdit></FaUserEdit>
                                     <span>Editar perfil</span>
                                 </Link>
@@ -96,6 +98,7 @@ function NavBar({logar}) {
                     <Route path="/principal" element={<Main/>}></Route>
                     <Route path="/categorias" element={<Categorias />}></Route>
                     <Route path="/despesas" element={<Despesas />}></Route>
+                    <Route path="/usuario" element={<Usuario />}></Route>
                 </Routes>
             </AuthProvider>
         </BrowserRouter>
