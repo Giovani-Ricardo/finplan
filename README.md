@@ -1,1 +1,1 @@
-# Instalar as dependencias que se encontram no package.json 
+# Install all dependencies with npm install
